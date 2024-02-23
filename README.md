@@ -1,7 +1,7 @@
 # Notes on using KubeVirt to make a Windows build server
 
-First follow this:
-git@github.com:gilesknap/winKubeVirt.git
+First follow this most excellent guide:
+[git@github.com:gilesknap/winKubeVirt.git](https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd)
 
 Then remove the installation media and add a network interface by applying the VM.yaml.
 
