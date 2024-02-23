@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: winhd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 35Gi
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: iso-win10
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: iso-win10
+    spec:
+      domain:
+        cpu:
+          cores: 6
+        devices:
+          interfaces:
+            - name: default
+              masquerade: {}
+          disks:
+          # - bootOrder: 1
+          #   cdrom:
+          #     bus: sata
+          #   name: cdromiso
+          - bootOrder: 2
+            disk:
+              bus: virtio
+            name: harddrive
+          - bootOrder: 3
+            cdrom:
+              bus: sata
+            name: virtiocontainerdisk
+        resources:
+          requests:
+            memory: 12G
+      networks:
+      - name: default
+        pod: {} # Stock pod network
+      volumes:
+      - name: cdromiso
+        persistentVolumeClaim:
+          claimName: iso-win10
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhd
+      - containerDisk:
+          image: quay.io/kubevirt/virtio-container-disk
+        name: virtiocontainerdisk
+      - cloudInitNoCloud:
+          networkData: |
+            version: 2
+            ethernets:
+              eth0:
+                dhcp4: true
+        name: cloudinitdisk
