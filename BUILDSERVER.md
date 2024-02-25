@@ -1,6 +1,8 @@
-# Setting up as a build server
+# Windows Server 2022 build Server for EPICS
 
 Starting point: a new install of Windows Server 2022.
+
+NOTE: In these notes I'm working with a Server running in a Kubernetes Cluster using KubeVirt. Consequently I'm using a service address for ssh connections. However these instructions would apply to any Windows Server and you could ssh from your workstation in that case, also you could put your public ssh key in `C:\Users\Administrator\.ssh\authorized_keys`.
 
 ## get ssh working
 
