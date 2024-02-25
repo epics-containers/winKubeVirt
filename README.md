@@ -1,9 +1,13 @@
 # Notes on using KubeVirt to make a Windows build server
 
+some early notes - to be refined if we get kubeVirt setup at DLS.
+
 First follow this most excellent guide:
 [git@github.com:gilesknap/winKubeVirt.git](https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd)
 
-Then remove the installation media and add a network interface by applying the VM.yaml.
+(I suggest a change to the above to make the CDROM PVC ReadMany so that we can stand up multiple servers from the one PVC.)
+
+Then remove the installation media and add a network interface by applying VM.yaml. To the cluster.
 
 Now we need to get some network drivers.
 
