@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-sharing
+spec:
+  storageClassName: nfs-storageclass
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 330Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pvc-sharing
+  name: pvc-sharing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc-sharing
+  template:
+    metadata:
+      labels:
+        app: pvc-sharing
+    spec:
+      volumes:
+      - name: pvc-sharing
+        persistentVolumeClaim:
+          claimName: nfs-pvc-sharing
+      containers:
+      - name: pvc-sharing
+        image: ubuntu
+        args:
+        - sleep
+        - "1000000"
+        volumeMounts:
+        - name: pvc-sharing
+          mountPath: /data

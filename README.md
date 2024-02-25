@@ -17,3 +17,13 @@ Screen shot:
 
 Now you can go back to SConfig and download OS updates!
 
+This may help setting up RDP.
+https://redhat-developer-demos.github.io/kubevirt-crc-windows-tutorial/
+
+Add RDP service:
+```bash
+kubectl virt expose vmi iso-win10 --port=3389 --name=rdp --type=NodePort
+```
+
+Set up a shared PVC for copying MSIs etc in.
+Could not get this to work - probably filesystem issues.

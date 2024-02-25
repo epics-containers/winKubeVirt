@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: winhd
+  name: winhd-2
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,14 +12,14 @@ spec:
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: iso-win10
+  name: iso-win10-2
 spec:
   running: false
   template:
     metadata:
       labels:
-        kubevirt.io/domain: iso-win10
-        kubevirt.io/name: windows-server
+        kubevirt.io/domain: iso-win10-2
+        kubevirt.io/name: windows-server-2
     spec:
       domain:
         cpu:
@@ -29,10 +29,10 @@ spec:
             - name: default
               masquerade: {}
           disks:
-          # - bootOrder: 1
-          #   cdrom:
-          #     bus: sata
-          #   name: cdromiso
+          - bootOrder: 1
+            cdrom:
+              bus: sata
+            name: cdromiso
           - bootOrder: 2
             disk:
               bus: virtio
@@ -41,9 +41,10 @@ spec:
             cdrom:
               bus: sata
             name: virtiocontainerdisk
-          - name: pvc-sharing
-            disk:
-              bus: sata
+          # - bootOrder: 4
+          #   name: pvc-sharing
+          #   disk:
+          #     bus: sata
         resources:
           requests:
             memory: 12G
@@ -51,15 +52,15 @@ spec:
       - name: default
         pod: {} # Stock pod network
       volumes:
-      # - name: cdromiso
-      #   persistentVolumeClaim:
-      #     claimName: iso-win10
+      - name: cdromiso
+        persistentVolumeClaim:
+          claimName: iso-win10
       - name: harddrive
         persistentVolumeClaim:
-          claimName: winhd
-      - name: pvc-sharing
-        persistentVolumeClaim:
-          claimName: nfs-pvc-sharing
+          claimName: winhd-2
+      # - name: pvc-sharing
+      #   persistentVolumeClaim:
+      #     claimName: nfs-pvc-sharing
       - containerDisk:
           image: quay.io/kubevirt/virtio-container-disk
         name: virtiocontainerdisk
