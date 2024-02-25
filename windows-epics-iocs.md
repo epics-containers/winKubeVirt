@@ -2,6 +2,8 @@
 
 ## Overview
 
+Windows IOCs will draw on the approach that we are working on for RTEMS. Namely that a proxy pod will run in kubernetes and be responsible for brining up the IOC on the target machine. For Windows this will be done over ssh instead of telnet.
+
 A windows build server is required. This should be set up using the method described in [Build Server](BUILDSERVER.md).
 
 The build server will also require the SDKs from OEMs that we build IOCs for. It will not require access to any shared filesystems because we will build everything from source on this server as per linux epics-containers Dockerfiles.
